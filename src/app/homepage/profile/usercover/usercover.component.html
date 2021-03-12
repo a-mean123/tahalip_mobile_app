@@ -1,0 +1,35 @@
+
+                <div class="profile">
+                  <div class="profile-cover">
+
+                      <!-- profile cover -->
+                      <img style="margin-right: -50%;" [src]="url ? url : user?.cover?.length > 0 ? _data.url + 'getfile/' + user?.cover : 'assets/images/default-cover.jpg'" alt="">
+                     
+                      
+                        <a *ngIf="user?._id === superUser?._id"> <i class="uil-camera"></i><label for="upl"> تعديل </label></a>
+                    
+                      
+                      <input #fileInput type="file" (change)="onAdd($event)" style="display: none;" class="form-control" id="upl">
+
+                  </div>
+
+                  <div class="profile-details">
+                      <div class="profile-image">
+                          <img style="width: 100px;height: 100px;" [src]="user?.image" alt="">
+                          <!-- <a> </a> -->
+                      </div>
+                      <div *ngIf="url" class="profile-details-info">
+                       <button (click)="update()" class="btn-primary">حفظ التغييرات</button>
+                    </div>
+
+                      <div class="profile-details-info">
+                          <h1> {{user?.name}} </h1>
+                          <p> {{user?.bio}} <a *ngIf="user?._id === superUser?._id" (click)="presentAlertPrompt()">تعديل </a></p>
+                      </div>
+
+                  </div>
+
+
+              
+
+              </div>

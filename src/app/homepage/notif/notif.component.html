@@ -1,0 +1,64 @@
+
+        <!-- header -->
+        <div id="main_header">
+          <header>
+              <div class="header-innr">
+
+                <ion-toolbar>
+             
+                  <ion-buttons style="background-color: transparent;" slot="start" (click)="back()">
+                    <ion-icon name="arrow-back-sharp"></ion-icon>
+                  </ion-buttons>
+                  <ion-title> إشعارات  </ion-title>
+                </ion-toolbar>
+
+               
+
+              </div> <!-- / heaader-innr -->
+          </header>
+
+      </div>
+
+      <div class="dropdown-notifications-content" data-simplebar>
+
+        <!-- notivication header -->
+        <div class="dropdown-notifications-headline">
+            <h4>إشعارات </h4>
+        </div>
+
+        <!-- notiviation list -->
+        <ul>
+
+            <li *ngFor="let notif of notifications;let i = index">
+                <a (click)="notif.text === '2' ? updateUser(notif.groupeId): notif.text === '3' ? removeGroupeFromUser(notif.groupeId) : doNothing()" [routerLink]="['/home/groupedetail', notif.groupeId]">
+                  <span class="notification-avatar">
+                     
+                  </span>
+                    <span class="notification-icon bg-gradient-danger">
+                        <i class="icon-feather-star"></i></span>
+                    <span style="margin-top: 12px;" class="notification-text">
+                          {{notif.text == '1' ? 'تم إلغاء عضويتك  من المجموعة' : notif.text == '2' ? 'تهانينا ! لقد تم قبول المجموعة التي أنشأتها'  
+                              : 'تم قبولك لتكون عضو في المجموعة  '}}
+                        <br> <span class="time-ago"> {{notif.groupeName}} </span>
+                    </span>
+                </a>
+            </li>
+   
+        </ul>
+
+    </div>
+
+
+
+ 
+    
+
+
+
+
+
+
+
+
+
+

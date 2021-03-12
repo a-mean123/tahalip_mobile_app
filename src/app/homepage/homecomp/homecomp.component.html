@@ -1,0 +1,51 @@
+    <ion-header>
+                 
+         <app-head ></app-head>
+    
+        </ion-header>
+  <ion-content fullscreen  [scrollEvents]="true"> 
+
+
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+  
+
+      <!-- contents -->
+      <div class="main_content">
+
+          <div class="main_content_inner">
+
+              <div class="uk-grid-large" uk-grid>
+
+                  <div class="uk-width-2-3@m fead-area">
+
+                 
+                     <app-groupeslider></app-groupeslider>
+
+                    <app-feedhome ></app-feedhome>
+
+            
+                  </div>
+
+
+           
+
+              </div>
+
+          </div>
+      </div>
+
+  
+
+
+
+      <ion-icon style="background-color: #505ff3;color: white;font-size: 30px;" [routerLink]="'/home/create'" class="chat-plus-btn"  uk-toggle  name="add-sharp"></ion-icon>
+ 
+
+  </div>
+
+
+
+  </ion-content>

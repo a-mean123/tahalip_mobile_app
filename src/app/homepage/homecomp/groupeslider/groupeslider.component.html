@@ -1,0 +1,49 @@
+<div class="section-small pt-0">
+  <div class="uk-position-relative" uk-slider="finite: true">
+
+      <div class="uk-slider-container pb-3">
+
+          <ul
+         
+              class="uk-slider-items uk-child-width-1-5@m uk-child-width-1-4@s uk-child-width-1-4 story-slider uk-grid">
+              <li >
+                  <a  [routerLink]="['/home/create']" routerDirection="forward" uk-toggle="target: body ; cls: is-open">
+                      <div style="height: 100px; background-color: #505ff3;"  class="story-card" 
+                          >
+                          <i style="margin-left: 15%;" class="uil-plus"></i>
+                          <div class="story-card-content">
+                              <h4 style="font-size: 13px;" > إنشاء مجموعة جديدة </h4 >
+                          </div>
+                      </div>
+                  </a>
+
+              </li>
+              <li *ngFor="let groupe of groupes">
+                  <a  [routerLink]="['/home/groupedetail', groupe._id]" routerDirection="forward" uk-toggle="target: body ; cls: is-open">
+                      <div style="height: 100px;" class="story-card" [attr.data-src]="_data.url + 'getfile/' + groupe.image"
+                          uk-img>
+                        
+                          <div style="background-color: rgba(0, 0, 0, 0.363);height: 100%;" class="story-card-content">
+                              <h4>{{groupe.name}}</h4>
+                          </div>
+                      </div>
+                  </a>
+
+              </li>
+           
+          </ul>
+
+          <div class="uk-visible@m">
+              <a class="uk-position-center-left-out slidenav-prev" href="#"
+                  uk-slider-item="previous"></a>
+             
+          </div>
+          <div class="uk-hidden@m">
+              <a class="uk-position-center-left slidenav-prev" href="#"
+                  uk-slider-item="previous"></a>
+             
+          </div>
+
+      </div>
+  </div>
+</div>

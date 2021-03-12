@@ -1,0 +1,84 @@
+
+
+
+
+
+
+<ion-content>
+
+
+      <app-headerside [title]="groupe?.name"></app-headerside>
+  
+  
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="chevron-down-circle-outline"
+          pullingText=""
+          refreshingSpinner="circles"
+          refreshingText="تحميل">
+        </ion-refresher-content>
+      </ion-refresher>
+  
+
+
+    
+
+      <!-- contents -->
+      <div  class="main_content">
+  
+        <div class="main_content_inner pt-0">
+  
+            <div class="single-group">
+              
+                <app-covergroupe [id]="groupe?._id"></app-covergroupe>
+  
+                <app-groupetab *ngIf="status || user?._id === groupe?.founder"  [id]="id" ></app-groupetab>
+  
+  
+            </div>
+     
+        
+  
+            <div  class="section-small">
+  
+            
+
+                <div  uk-grid>
+  
+                    <div class="uk-width-2-3@m fead-area">
+  
+                        <div *ngIf="!status && join !== null && groupe?.status === true ">
+                            <img class="cc" src="assets/att.png" alt="">
+                        </div> 
+
+                        <div *ngIf="groupe?.status === false">
+
+                            <img class="cc" src="assets/att.png" alt="">
+
+                        </div> 
+
+                        <div *ngIf="user?._id !== groupe?.founder">
+                          <div *ngIf="join == null && groupe?.status === true">
+                            <img class="cc" src="assets/joingroupe.png" alt="">
+                        </div> 
+                        </div>
+
+                      <router-outlet  *ngIf="status || (user?._id === groupe?.founder && groupe?.status) "></router-outlet>
+                      
+  
+                    </div>
+  
+                 
+  
+                </div>
+  
+            </div>
+  
+  
+        </div>
+  
+    </div>
+    
+
+  </ion-content>
+  

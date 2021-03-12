@@ -1,0 +1,333 @@
+     
+     
+     
+     
+     
+       <ion-content fullscreen  [scrollEvents]="true"> 
+
+
+
+        <!-- Wrapper -->
+        <div id="wrapper">
+    
+      
+         <app-head></app-head>
+     
+     
+     
+     <!-- contents -->
+      <div class="main_content" >
+
+        <div class="main_content_inner" >
+
+
+            <div style="display:flex;margin-top: 16px;">
+                <img style="width: 60px;" [src]="_data.url + 'getfile/' + questions[questionSliderIndex].image" alt="">
+                 
+                <div style="width: 8px;"></div>
+
+                <h3> {{questions[questionSliderIndex].titre}} </h3>
+    
+            </div>
+         
+      <hr>
+
+            
+            <div  class="uk-grid-large" uk-grid>
+                <div class="uk-width-2-3@s">
+
+
+                 
+
+
+                    <!-- quiz two -->
+                    <div  class="quiz-block">
+                        <div class="quiz-block-content" style="text-align: center;">
+
+                            <div>
+                             
+                                <div  style="display: flex;text-align: center;justify-content: space-around;">
+                                    <ion-icon (click)="questionSliderIndex > 0 ? questionSliderIndex = questionSliderIndex - 1 : null;"  size="large" style="color: #9b9b9b;margin-top: 24px;" name="caret-forward-outline"></ion-icon>
+                                    <div style="width: 16px;"></div>
+                                    <h1 style="color: #606ded;font-weight: bolder;font-size: 35px;"> {{questions[questionSliderIndex].text}} </h1>
+                                    <div style="width: 16px;"></div>
+                                    <ion-icon (click)="questionSliderIndex = questionSliderIndex + 1;" size="large" style="color: #9b9b9b;margin-top: 24px;" name="caret-back-outline"></ion-icon>
+                                </div>
+
+
+                     
+
+                          
+                           <!-- quiz block buttons -->
+                           <div class="btn-acts" style="display: flex;justify-content: space-around;margin-top: 44px;">
+                            <div style="float: left;margin-right: 15%;">
+                                <a  class="button white circle" uk-tooltip="Answers">
+                                     <span> {{questions[questionSliderIndex].responses.length}}</span><i class="uil-comment-message"></i>
+                                </a>
+           
+                            </div>
+                            <div style="display: flex;justify-content: space-around;float: right;margin-left: 21%;">
+                                <div class="uk-text-small" (click)="questions[questionSliderIndex].like.indexOf(superUser._id) === -1 ? likecm(questionSliderIndex) : dislikecm(questionSliderIndex)">
+                                    <a  style="color: #9b9b9b;" class=" mr-1"> {{questions[questionSliderIndex].like.length}} <i style="color: #9b9b9b;" class="uil-thumbs-up"></i></a>
+                
+                                </div>    
+                                <div style="width: 20px;">
+                
+                                </div>
+                                <div class="uk-text-small" (click)="questions[questionSliderIndex].dislike.indexOf(superUser._id) === -1 ? adddislikecm(questionSliderIndex) : removedislikecm(questionSliderIndex)" >
+                                    <a   style="color: #9b9b9b;" class=" mr-1"> {{questions[questionSliderIndex].dislike.length}} <i style="color: #9b9b9b;" class="uil-thumbs-down"></i></a>
+                                </div>  
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+
+                <!-- post comments -->
+                        <div *ngIf="showNormalComment && selectedPost !== questionSliderIndex" class="post-comments">
+                            
+                            <div *ngFor="let c of questions[questionSliderIndex].responses ; let i = index"  class="post-comments-single">
+                               
+                           
+                                <div *ngIf="i < 4" style="display: flex;width: 100%;">
+                                    <div class="post-comment-avatar"> 
+                                        <img style="margin-left: 8px;" [src]="c.authorImage" alt="">
+                                    </div>
+                                    <div class="post-comment-text "  style="width: 100%;">
+                                        <div class="post-comment-text-inner" style="width: 100%;">
+                                            <h6> {{c.authorName}}</h6>
+                                            <p>
+                                            {{getLinkFromPostDescription(c?.text, i)?.txt}}
+                                        </p>
+                                    
+                                        <a [href]="getLinkFromPostDescription(c?.text, i)?.link" target="_blank" *ngIf="c?.text?.indexOf('http') > -1">{{getLinkFromPostDescription(c?.text,i)?.link}}</a>
+                                    
+                                            <div (click)="presentModal(_data.url + 'getfile/' + c?.image)" *ngIf="c.image" class="fullsizeimg" style="width: 100%;">
+                                                <img style="width: 100%;" [src]="_data.url + 'getfile/' + c?.image" alt="">
+                                    
+                                            </div>
+                                        </div>
+                                
+                                        <div style="display: flex;">
+                                        <div class="uk-text-small" (click)="c.like.indexOf(superUser._id) === -1 ? like(i,questionSliderIndex) : dislike(i,questionSliderIndex)">
+                                            <a  class="text-danger mr-1"> {{c.like.length}} <i class="uil-thumbs-up"></i></a>
+    
+                                        </div>    
+                                        <div style="width: 20px;">
+    
+                                        </div>
+                                        <div class="uk-text-small" (click)="c.dislike.indexOf(superUser._id) === -1 ? adddislike(i,questionSliderIndex) : removedislike(i,questionSliderIndex)">
+                                            <a  class="text-danger mr-1"> {{c.dislike.length}} <i class="uil-thumbs-down"></i></a>
+                                        </div>    
+                                    </div>
+                                    </div>
+                                    <div *ngIf="c?.authorId === superUser._id" class="post-btn-action">
+                                        <span class="icon-more uil-ellipsis-h"></span>
+                                        <div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover ">
+                                            <ul class="uk-nav uk-dropdown-nav">
+                                          
+                                                <li (click)="presentAlertConfirmToDeleteComment(c?._id )" *ngIf="c?.authorId === superUser._id"><a  class="text-danger"> <i class="uil-trash-alt mr-1"></i>
+                                                    حذف </a></li>
+        
+        
+                                                    <li (click)="presentAlertPrompt(c?._id , q?._id)" *ngIf="c?.authorId === superUser._id"><a  class="text-primary"> <i class="uil-pencil-alt mr-1"></i>
+                                                        تعديل </a></li>
+                                    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="c?.authorId === superUser.idFacebook" class="post-btn-action">
+                                    <span class="icon-more uil-ellipsis-h"></span>
+                                    <div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover ">
+                                        <ul class="uk-nav uk-dropdown-nav">
+                                            <li (click)="presentAlertConfirmToDeleteComment(c?._id , p?._id)" *ngIf="c?.authorId === superUser.idFacebook"><a  class="text-danger"> <i class="uil-trash-alt mr-1"></i>
+                                                حذف </a></li>
+    
+    
+                                                <li (click)="presentAlertPrompt(c?._id , p?._id)" *ngIf="c?.authorId === user.idFacebook"><a  class="text-primary"> <i class="uil-pencil-alt mr-1"></i>
+                                                    تعديل </a></li>
+                                
+                                        </ul>
+                                    </div>
+                                </div>
+    
+                                </div>
+
+
+                            </div>
+
+
+                                <a *ngIf="questions[questionSliderIndex]?.responses?.length>4 && !showComment" (click)="selectedPost = questionSliderIndex;showComment = !showComment;" class="view-more-comment"> عرض  المزيد من الردود</a>
+                              
+                                <div>
+                                    <div style="width: 33%;margin:8px;position: relative;" *ngIf="url && (url.indexOf('mp4') === -1 || url.indexOf('mp4') > 15 )">
+                                        <ion-icon name="close-circle-outline" style="margin-top: -8px;margin-right: -8px;position: absolute;" size="large" (click)="url=null "></ion-icon>
+                                    
+                                            <img [src]="url">
+                                    </div>
+    
+                                    <div (click)="url = null" *ngIf="(url?.indexOf('mp4') > 1 && url?.indexOf('mp4') < 15) && url?.length > 0" style="position: relative;">
+                                        <ion-icon name="close-circle-outline" style="margin-top: -8px;margin-right: -8px;position: absolute;" size="large" (click)="url=null"></ion-icon>
+                                    
+                                        <video  style="width: 33%;"  controls="controls" [muted]="'muted'" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+                                            <source [src]="url" type="video/mp4" />
+                                        </video>
+                                    </div>
+                                        <div class="post-add-comment" style="width: 100%;background-color: rgba(218, 218, 218, 0.712);border-radius: 18px;">
+                                    
+                                            
+                                            <div class="post-add-comment-text-area" style="display: inline-flex;">
+    
+                                            <textarea cols="40" style="width: 100%;background-color: rgba(0, 0, 0, 0);border: 0px;margin: 4px;" [ngClass]="{'error' : testComment}"  [(ngModel)]="comment.text" type="text" placeholder="اكتب تعليقك ..."></textarea>
+                                            <input (change)="onAdd($event)" style="display: none;" id="file1"  #fileInput name="image" type="file">
+                                            
+                                            <button style="background-color: transparent;">
+                                                <label for="file1">
+                                                    <i   class="uil-image"></i>
+                                                </label>
+                                            </button>
+                                            <button style="background-color: transparent;"   (click)="ajoutComment(questions[questionSliderIndex]._id, questionSliderIndex)">
+                                                <ion-icon style=" transform: rotate(180deg);" name="send-sharp"></ion-icon>
+                                            </button>
+                                            </div>
+    
+                                        </div>
+                                </div>
+           
+
+                                </div>
+
+
+                                <div *ngIf="showComment  && questionSliderIndex === selectedPost " class="post-comments">
+                            
+                                    <div *ngFor="let c of questions[questionSliderIndex].responses ; let i = index"  class="post-comments-single">
+                                        <div  style="display: flex;width: 100%;">
+                                            <div class="post-comment-avatar"> 
+                                                <img style="margin-left: 8px;" [src]="c.authorImage" alt="">
+                                            </div>
+                                            <div class="post-comment-text " style="width: 100%;">
+                                                <div class="post-comment-text-inner" style="width: 100%;">
+                                                    <h6> {{c.authorName}}</h6>
+                                                    <p>
+                                                    {{getLinkFromPostDescription(c?.text, i)?.txt}}
+                                                </p>
+                                            
+                                                <a [href]="getLinkFromPostDescription(c?.text, i)?.link" target="_blank" *ngIf="c?.text?.indexOf('http') > -1">{{getLinkFromPostDescription(c?.text,i)?.link}}</a>
+                                            
+                                                    <div (click)="presentModal(_data.url + 'getfile/' + c?.image)" *ngIf="c.image" class="fullsizeimg" style="width: 100%;">
+                                                        <img [src]="_data.url + 'getfile/' + c?.image" alt="">
+                                            
+                                                    </div>
+                                                </div>
+                                        
+                                                <div style="display: flex;">
+                                                <div class="uk-text-small" (click)="c.like.indexOf(superUser_id) === -1 ? like(i) : dislike(i)">
+                                                    <a  class="text-danger mr-1"> {{c.like.length}} <i class="uil-thumbs-up"></i></a>
+            
+                                                </div>    
+                                                <div style="width: 20px;">
+            
+                                                </div>
+                                                <div class="uk-text-small" (click)="c.dislike.indexOf(superUser._id) === -1 ? adddislike(i) : removedislike(i)">
+                                                    <a  class="text-danger mr-1"> {{c.dislike.length}} <i class="uil-thumbs-down"></i></a>
+                                                </div>    
+                                            </div>
+                                            </div>
+                                            <div *ngIf="c?.authorId === superUser._id" class="post-btn-action">
+                                                <span class="icon-more uil-ellipsis-h"></span>
+                                                <div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover ">
+                                                    <ul class="uk-nav uk-dropdown-nav">
+                                                     
+                                                        <li (click)="presentAlertConfirmToDeleteComment(c?._id )" *ngIf="c?.authorId === superUser._id"><a  class="text-danger"> <i class="uil-trash-alt mr-1"></i>
+                                                            حذف </a></li>
+                
+                
+                                                            <li (click)="presentAlertPrompt(c?._id , questions[questionSliderIndex]?._id)" *ngIf="c?.authorId === superUser._id"><a  class="text-primary"> <i class="uil-pencil-alt mr-1"></i>
+                                                                تعديل </a></li>
+                                            
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="c?.authorId === superUser.idFacebook" class="post-btn-action">
+                                            <span class="icon-more uil-ellipsis-h"></span>
+                                            <div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover ">
+                                                <ul class="uk-nav uk-dropdown-nav">
+                                                    <!-- <li><a href="#"> <i class="uil-share-alt mr-1"></i> شارك</a> </li>
+                                                    
+                                                
+                                                    <li><a href="#"> <i class="uil-favorite mr-1"></i> إضافة مفضلات</a></li> -->
+                                                    <li (click)="presentAlertConfirmToDeleteComment(c?._id , p?._id)" *ngIf="c?.authorId === superUser.idFacebook"><a  class="text-danger"> <i class="uil-trash-alt mr-1"></i>
+                                                        حذف </a></li>
+            
+            
+                                                        <li (click)="presentAlertPrompt(c?._id , p?._id)" *ngIf="c?.authorId === user.idFacebook"><a  class="text-primary"> <i class="uil-pencil-alt mr-1"></i>
+                                                            تعديل </a></li>
+                                        
+                                                </ul>
+                                            </div>
+                                        </div>
+            
+                                        </div>
+        
+        
+                                    </div>
+        
+        
+                                        <a (click)="selectedPost = -1;showComment = !showComment;" class="view-more-comment"> عرض تعليقات أقل</a>
+                                         <div style="width: 33%;margin:8px;position: relative;" *ngIf="url && (url.indexOf('mp4') === -1 || url.indexOf('mp4') > 15 )">
+                                            <ion-icon name="close-circle-outline" style="margin-top: -8px;margin-right: -8px;position: absolute;" size="large" (click)="url=null "></ion-icon>
+                                        
+                                                <img [src]="url">
+                                        </div>
+        
+                                        <div (click)="url = null" *ngIf="(url?.indexOf('mp4') > 1 && url?.indexOf('mp4') < 15) && url?.length > 0" style="position: relative;">
+                                            <ion-icon name="close-circle-outline" style="margin-top: -8px;margin-right: -8px;position: absolute;" size="large" (click)="url=null"></ion-icon>
+                                        
+                                            <video  style="width: 33%;"  controls="controls" [muted]="'muted'" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+                                                <source [src]="url" type="video/mp4" />
+                                            </video>
+                                        </div>
+                                            <div class="post-add-comment" style="width: 100%;background-color: rgba(218, 218, 218, 0.712);border-radius: 18px;">
+                                        
+                                                
+                                                <div class="post-add-comment-text-area" style="display: inline-flex;">
+        
+                                                <textarea cols="40" style="width: 100%;background-color: rgba(0, 0, 0, 0);border: 0px;margin: 4px;" [ngClass]="{'error' : testComment}"  [(ngModel)]="comment.text" type="text" placeholder="اكتب تعليقك ..."></textarea>
+                                                <input (change)="onAdd($event)" style="display: none;" id="file1"  #fileInput name="image" type="file">
+                                                
+                                                <button style="background-color: transparent;">
+                                                    <label for="file1">
+                                                        <i   class="uil-image"></i>
+                                                    </label>
+                                                </button>
+                                                <button style="background-color: transparent;"   (click)="ajoutComment(q._id, questionSliderIndex)">
+                                                    <ion-icon style=" transform: rotate(180deg);" name="send-sharp"></ion-icon>
+                                                </button>
+                                                </div>
+        
+                                            </div>
+        
+                                        </div>
+        
+
+                                  
+
+                    </div>
+
+
+               
+
+                </div>
+
+              
+            </div>
+
+            
+
+        </div>
+    </div>
+
+  </div>
+
+
+
+</ion-content>

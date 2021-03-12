@@ -1,0 +1,79 @@
+
+        <!-- header -->
+        <div id="main_header">
+          <header>
+              <div class="header-innr">
+
+                <ion-toolbar>
+             
+                  <ion-buttons style="background-color: transparent;" slot="start" (click)="back()">
+                    <ion-icon name="arrow-back-sharp"></ion-icon>
+                  </ion-buttons>
+                  <ion-title> مجموعة جديدة  </ion-title>
+                </ion-toolbar>
+
+               
+
+              </div> <!-- / heaader-innr -->
+          </header>
+
+      </div>
+
+
+
+      <div *ngIf="etape1" style="text-align: center;">
+
+
+        <img style="width: 70%;margin-right: 15%;margin-left: 15%;margin-top: 82px;"  src="assets/creategroupe.png" alt="">
+
+
+      </div>
+
+
+ 
+      <div *ngIf="etape1" style="width: 100%;">
+
+        <button  (click)="gotoetape2()" class=" button-primary">انشاء مجموعة</button>
+
+      </div>
+
+
+
+
+
+      <div *ngIf="etape2" style="margin-top: 120px;">
+
+        <input [ngClass]="{'error' : test1}"  [(ngModel)]="groupe.name" type="text" placeholder="اسم المجموعة" class="form-control">
+
+        <textarea [ngClass]="{'error' : test2}"  [(ngModel)]="groupe.description" placeholder="وصف المجموعة" name="" id="" cols="30" rows="4" class="form-control"></textarea>
+      
+      
+      
+        <select [ngClass]="{'error' : test3}"  [(ngModel)]="groupe.categorie" class="form-control">
+
+          <option *ngFor="let c of categories" [ngValue]="c.name" >{{c.name}}</option>
+         </select>
+        
+         <p *ngIf="!url && test4" style="color: red;">
+          اختر صورة للمجموعة
+         </p>
+        <input #fileInput type="file" (change)="onAdd($event)" style="display: none;" class="form-control" id="upl">
+        <label for="upl" >
+          <img  style="margin-left: 30%;margin-right: 30%;width: 40%; margin-top: 24px;" src="assets/images/up.png" alt="">
+        </label>
+        <div style="width: 95%;margin:8px" *ngIf="url">
+          <img [src]="url">
+         </div>
+    
+        <button  (click)="add()"  class="form-control bt">
+          انشاء المجموعة  <ion-spinner *ngIf="showSpinner" color="light" name="lines"></ion-spinner>
+         </button>
+
+      
+      </div>
+
+
+
+
+
+

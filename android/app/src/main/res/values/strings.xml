@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ionic-test-1</string>
+    <string name="title_activity_main">ionic-test-1</string>
+    <string name="package_name">com.devdactic.fblogin</string>
+    <string name="custom_url_scheme">com.devdactic.fblogin</string>
+    <string name="facebook_app_id">745200519681404</string>
+    <string name="fb_login_protocol_scheme">fb745200519681404</string>
+</resources>

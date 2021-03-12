@@ -1,0 +1,79 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>قوانين المجموعات</ion-title>
+    <ion-buttons slot="end" style="background-color: transparent;">
+      <ion-button (click)="dismissModal()" style="background-color: transparent;"> <ion-icon name="close-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-list>
+    <ion-item>
+    
+        <img style="height: 50px;width: 70px;" [src]="_data.url + 'getfile/' + groupe.image"/>
+  
+      <ion-label style="margin-right: 8px;">
+        <h2>{{groupe.name}}</h2>
+      
+      </ion-label>
+    </ion-item>
+ 
+
+  </ion-list>
+
+
+  <p style="margin:16px; font-size: 16px; letter-spacing: 0.6px; color: rgb(80, 80, 80);font-weight: 600;" class="lead">
+    نُرحب بكم في مجتمع طحالب، نؤكد على ضرورة قراءة واستيعاب قوانين كل مجموعة قبل وأثناء المشاركة:
+  </p>
+
+
+  <h3 class="question">
+    ما هو اختصاصك؟
+  </h3>
+  <textarea [ngClass]="{'error' : test1}" [(ngModel)]="join.rep1" class="form-control">اكتب اجابتك</textarea>
+
+
+  <h3 class="question">
+    بماذا ستفيد المجموعة؟
+  </h3>
+  <textarea [ngClass]="{'error' : test1}" [(ngModel)]="join.rep2" class="form-control">اكتب اجابتك</textarea>
+
+
+  <h3 class="question">
+    هل لديك أفكار من أجل مجتمع أفضل؟ 
+  </h3>
+  <textarea [ngClass]="{'error' : test1}" [(ngModel)]="join.rep3" class="form-control">اكتب اجابتك</textarea>
+
+
+
+  <h4>1- الاحترام </h4>
+  <p>واجب الاحترام المتبادل بين الأعضاء وعدم الاستهزاء بآراء الاخرين.</p>
+
+  <h4>2- أهداف المجموعة</h4>
+  <p>عدم نشر أي منشور خارج عن نطاق وأهداف المجموعة.</p>
+
+  <h4>3- </h4>
+  <p>أي عضو يخالف هذه الشروط سيتم حذفه دون سابق إنذار.</p>
+
+
+
+  <p>شكراً على قراءتكم للقوانين ونرجوا منكم الالتزام بهذه الشروط ليكون هناك تفاعل هادف.</p>
+
+  <ion-grid>
+
+    <ion-row>
+
+      <ion-col>
+        <ion-button (click)="joinGroupe()" color="primary" size="small">قبول</ion-button>  
+      </ion-col>
+
+      <ion-col>
+        <ion-button (click)="dismissModal()"  color="danger" size="small">رفض</ion-button>
+      </ion-col>
+
+    </ion-row>
+
+
+  </ion-grid>
+
+</ion-content>

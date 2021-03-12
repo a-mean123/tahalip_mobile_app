@@ -1,0 +1,55 @@
+
+  <ion-content fullscreen  [scrollEvents]="true"> 
+
+
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+  
+      
+     <app-head></app-head>
+
+  
+        <!-- contents -->
+        <div class="main_content">
+
+          <div class="main_content_inner">
+
+
+  
+              <!-- Videos sliders 1 -->
+        
+              <app-latest [videos]="videos" ></app-latest>
+        
+
+      
+
+    
+
+              <!-- Videos sliders 2 -->
+
+            
+
+              <nav class="responsive-tab mb-4">
+                  <ul>
+                      <li class="uk-active"><a href="#"> جميع الحلقات </a></li>
+                    
+                  </ul>
+              </nav>
+
+              <app-morevideo [video]="videosall"></app-morevideo>
+
+
+          </div>
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+  </ion-content>

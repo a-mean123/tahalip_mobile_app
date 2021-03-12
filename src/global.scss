@@ -24,3 +24,18 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+/* DOES NOT WORK - not specific enough */
+.modal-wrapper {
+    background: rgb(202, 202, 202);
+  }
+  
+  /* Works - pass "my-custom-class" in cssClass to increase specificity */
+  .my-custom-class .modal-wrapper {
+    background: rgb(204, 202, 202);
+  }
+
+  .my-custom-class {
+    --background: rgb(221, 216, 216);
+  }

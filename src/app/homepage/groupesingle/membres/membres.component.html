@@ -1,0 +1,23 @@
+
+
+    <div *ngFor="let m of membres">
+      <div class="list-items">
+         <div class="post-new-media-user">
+              <img [src]=" m.image" alt="">
+          </div>
+          <div class="list-item-content" style="margin-right: 16px;margin-top: -8px;">
+              <a>
+                  <h5> {{ m.name }}</h5>
+              </a>
+         
+          </div>
+          <div class="uk-width-auto">
+              <span class="btn-option" aria-expanded="false">
+                  <i class="icon-feather-more-horizontal"></i>
+              </span>
+            
+          </div>
+      </div>
+  </div> 
+
+  

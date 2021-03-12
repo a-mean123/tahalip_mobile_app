@@ -1,0 +1,82 @@
+     
+     
+  <ion-content fullscreen  [scrollEvents]="true"> 
+
+
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+  
+     <app-head></app-head>
+     
+     
+     <!-- contents -->
+      <div class="main_content">
+
+        <div class="main_content_inner">
+
+
+            <h1> احدث المجموعات </h1>
+ 
+            <app-latests-groupe></app-latests-groupe>
+
+      
+
+            <div style="margin-top: -20px;" class="section-header pb-2">
+                <div class="section-header-left">
+                    <h3> كل المجموعات </h3>
+                </div>
+            </div>
+
+            
+
+          <app-groupetabu></app-groupetabu>
+
+
+
+
+
+        </div>
+
+
+        <!-- For Night mode -->
+        <script>
+            (function (window, document, undefined) {
+                'use strict';
+                if (!('localStorage' in window)) return;
+                var nightMode = localStorage.getItem('gmtNightMode');
+                if (nightMode) {
+                    document.documentElement.className += ' night-mode';
+                }
+            })(window, document);
+
+
+            (function (window, document, undefined) {
+
+                'use strict';
+
+                // Feature test
+                if (!('localStorage' in window)) return;
+
+                // Get our newly insert toggle
+                var nightMode = document.querySelector('#night-mode');
+                if (!nightMode) return;
+
+                // When clicked, toggle night mode on or off
+                nightMode.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    document.documentElement.classList.toggle('night-mode');
+                    if (document.documentElement.classList.contains('night-mode')) {
+                        localStorage.setItem('gmtNightMode', true);
+                        return;
+                    }
+                    localStorage.removeItem('gmtNightMode');
+                }, false);
+
+            })(window, document);
+        </script>
+
+    </div>
+</div>
+</ion-content>

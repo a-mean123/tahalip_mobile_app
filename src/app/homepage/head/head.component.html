@@ -1,0 +1,155 @@
+  
+<ion-menu style="position: fixed;" side="start" menuId="custom" contentId="main" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-title>طحالب</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item routerLink="/">الصفحة الرئيسية</ion-item>
+      <ion-item [routerLink]="['/home/profile' , user._id]"> صفحتي الشخصية</ion-item>
+
+     
+      <ion-item routerLink="/home/groupes">مجتمعات طحالب</ion-item>
+      <ion-item routerLink="/home/question">سؤال الحلقة</ion-item>
+      <ion-item routerLink="/home/mygroupe">مجموعاتي</ion-item>
+
+      <ion-item routerLink="/home/video">حلقات طحالب</ion-item>
+      
+      <ion-item routerLink="/home/shop">المنتجات</ion-item>
+      <ion-item routerLink="/home/about">من نحن</ion-item>
+
+      <ion-item ><a style="text-decoration: none; color: black;" target="_blank" href="https://www.youtube.com/channel/UCuLxvZzGeoJYATCMr97dJZQ"> قناة اليوتيوب</a> </ion-item>
+      <ion-item ><a style="text-decoration: none; color:black" target="_blank" href="https://www.facebook.com/Tahalip/?ref=page_internal"> صفحة الفيس بوك</a> </ion-item>
+     
+     
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="main"></ion-router-outlet>
+
+
+
+<!-- header -->
+  <div id="main_header">
+    <header>
+        <div class="header-innr">
+
+
+            <!-- Logo-->
+            <div  (click)="openCustom()">
+              <ion-icon name="menu-outline" style="font-size: 30px;"></ion-icon>
+              
+          </div>
+
+            <!-- Logo-->
+            <div id="logo">
+                <a routerLink="/"> <img style="width: 50px;" src="assets/images/logo.png" alt=""></a>
+                <a> <img src="assets/images/logo-light.png" class="logo-inverse"
+                        alt=""></a>
+            </div>
+
+       
+
+            <!-- user icons -->
+            <div style="margin-right: 50%" class="head_user">
+
+
+      
+     <!-- notificiation icon  -->
+<a  (click)="updateStatusOfNotification()" class="opts_icon">
+      <img src="assets/images/icons/bell.svg" alt=""> <span *ngIf="notReaded>0">{{notReaded}}</span>
+  </a>
+
+
+  <!-- notificiation dropdown -->
+  <div style="margin-right: -220%;" uk-dropdown="mode:click ; animation: uk-animation-slide-bottom-small"
+      class="dropdown-notifications">
+
+      <!-- notification contents -->
+      <div class="dropdown-notifications-content" data-simplebar>
+
+          <!-- notivication header -->
+          <div class="dropdown-notifications-headline">
+              <h4>إشعارات </h4>
+          </div>
+
+          <!-- notiviation list -->
+          <ul>
+
+              <li *ngFor="let notif of notifications;let i = index">
+                  <a *ngIf="i < 5" (click)="notif.text === '2' ? updateUser(notif.groupeId): notif.text === '3' ? removeGroupeFromUser(notif.groupeId) : doNothing()" [routerLink]="['/home/groupedetail', notif.groupeId]">
+                    <span class="notification-avatar">
+                       
+                    </span>
+                      <span class="notification-icon bg-gradient-danger">
+                          <i class="icon-feather-star"></i></span>
+                      <span style="margin-top: 12px;" class="notification-text">
+                            {{notif.text == '1' ? 'تم إلغاء عضويتك  من المجموعة' : notif.text == '2' ? 'تهانينا ! لقد تم قبول المجموعة التي أنشأتها'  
+                                : 'تم قبولك لتكون عضو في المجموعة  '}}
+                          <br> <span class="time-ago"> {{notif.groupeName}} </span>
+                      </span>
+                  </a>
+              </li>
+     
+          </ul>
+
+      </div>
+
+      <p  routerLink="/home/notif"  *ngIf="notifications?.length > 5"  style="text-align: center;margin-top: 4px;">إظهار المزيد</p>
+  </div>
+
+         
+
+                <!-- profile -image -->
+                <a class="opts_account" style=" width: 50px;"> <img  [src]="user?.image" alt=""></a>
+
+                <!-- profile dropdown-->
+                <div style="margin-right: -200%;" uk-dropdown="mode:click ; animation: uk-animation-slide-bottom-small"
+                    class="dropdown-notifications rounded">
+
+                    <!-- User Name / Avatar -->
+                    <a [routerLink]="['/home/profile' , user?._id]">
+
+                        <div class="dropdown-user-details">
+                            <div class="dropdown-user-avatar">
+                                <img [src]="user?.image" alt="">
+                            </div>
+                            <div class="dropdown-user-name"> {{user?.name}}  </div>
+                        </div>
+
+                    </a>
+
+                    <hr class="m-0">
+                    <ul class="dropdown-user-menu">
+                        <!-- <li><a href="page-setting.html"> <i class="uil-user"></i> My Account </a> </li>
+                        <li><a href="group-feed.html"> <i class="uil-thumbs-up"></i> Liked Pages </a></li>
+                        <li><a href="page-setting.html"> <i class="uil-cog"></i> Account Settings</a></li>
+                        <li>
+                            <a href="#" id="night-mode" class="btn-night-mode">
+                                <i class="uil-moon"></i> Night mode
+                                <span class="btn-night-mode-switch">
+                                    <span class="uk-switch-button"></span>
+                                </span>
+                            </a>
+                        </li>
+                      -->
+                        <li><a (click)="_data.logoutUser()"> <i class="uil-sign-out-alt"></i>Log Out</a>
+                        </li>
+                    </ul>
+
+              
+
+                </div>
+
+
+            </div>
+
+        </div> <!-- / heaader-innr -->
+
+
+    </header>
+
+</div>

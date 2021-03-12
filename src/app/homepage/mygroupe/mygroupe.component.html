@@ -1,0 +1,67 @@
+
+  <ion-content fullscreen  [scrollEvents]="true"> 
+
+
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+  
+     <app-head></app-head>
+     
+     
+     <!-- contents -->
+      <div class="main_content">
+
+        <div class="main_content_inner">
+
+
+            <h1> مجموعاتي </h1>
+
+
+            <nav class="responsive-tab style-4 mb-3">
+              <ul>
+                  <li (click)="getAllGroupe(); selected = -1" [ngClass]="{'uk-active' : selected === -1}"><a > كل المجموعات <span> {{groupes?.length}} </span> </a></li>
+                  <li (click)="getGroupeByCategorie(c.name); selected = i" [ngClass]="{'uk-active' : selected === i}" *ngFor="let c of categorie;let i =index"><a > {{c.name}} </a></li>
+                 
+              </ul>
+            </nav>
+            
+            
+            <div class="uk-grid-large" uk-grid>
+              <div class="uk-width-2-3@m">
+            
+                  <div *ngFor="let g of groupes" class="uk-child-width-1-2@s uk-grid-row-small" uk-grid>
+                      <div>
+                          <div class="list-items" [routerLink]="['/home/groupedetail' , g._id]">
+                              <div class="list-item-media">
+                                  <img [src]="_data.url + 'getfile/' + g.image" alt="">
+                              </div>
+                              <div style="margin-right: 12px;margin-top: -12px;" class="list-item-content">
+                                  <a >
+                                      <h5> {{g.categorie}} </h5>
+                                  </a>
+                                  <p > {{g.name}} </p>
+                              </div>
+                        
+                          </div>
+                      </div>
+            
+            
+                  </div>
+            
+            
+            
+              </div>
+            
+            
+            </div>
+            
+
+            </div>
+
+            </div>
+
+            </div>
+
+            </ion-content>

@@ -1,0 +1,35 @@
+<div class="uk-position-relative mb-4" uk-slider="finite: true">
+
+  <div style="height: 200px;" class="uk-slider-container pb-3 video-grid-slider ">
+
+      <ul class="uk-slider-items uk-child-width-1-4@m uk-child-width-1-3@s uk-grid">
+
+
+          <li *ngFor="let v of videos">
+              <a (click)="presentModal(v)" class="video-post">
+                  <!-- Blog Post Thumbnail -->
+                  <div class="video-post-thumbnail">
+                      <span class="video-post-time">23:00</span>
+                      <span class="play-btn-trigger"></span>
+                      <img [src]="v.snippet.thumbnails.high.url" alt="">
+                  </div>
+
+                  <!-- Blog Post Content -->
+                  <div class="video-post-content">
+                      <h3> {{v.snippet.title}} </h3>
+                  </div>
+              </a>
+          </li>
+
+   
+
+      </ul>
+
+  </div>
+
+
+  <a class="uk-position-center-left-out uk-position-small uk-hidden-hover slidenav-prev" href="#"
+      uk-slider-item="previous"></a>
+  <a class="uk-position-center-right-out uk-position-small uk-hidden-hover slidenav-next" href="#"
+      uk-slider-item="next"></a>
+</div>

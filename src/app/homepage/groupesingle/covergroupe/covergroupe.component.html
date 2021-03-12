@@ -1,0 +1,41 @@
+
+
+     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="chevron-down-circle-outline"
+        pullingText=""
+        refreshingSpinner="circles"
+        refreshingText="تحميل">
+      </ion-refresher-content>
+    </ion-refresher>
+
+
+<div class="group-cover" >
+
+  <!--Signle group cover -->
+  <img   [src]="_data.url + 'getfile/'+ groupe?.image" alt="">
+
+</div>
+
+<div class="single-group-details" >
+  <div class="left-side">
+
+      <div class="single-group-details-info" style="margin-top: -27px;">
+          <h3> {{groupe?.name}} </h3>
+          <p>
+              <p> {{mb?.length}} انضم إلى هذا</p>
+              <p> تم إنشاؤه عن طريق {{founder?.name}} </p>
+        
+      </div>
+  </div>
+  <div class="right-side">
+      <div class="btn-subscribe">
+          <a *ngIf="!joined && user?._id !== groupe?.founder" (click)="presentModal()" class="button primary" style="padding: 02px;width: 60px; height: 30px;"> انضم <i class="uil-thumbs-up"></i> 
+          </a>
+
+          <a  *ngIf="joined && user?._id !== groupe?.founder" (click)="presentAlertConfirm(jj?._id , groupe?._id)" class="button primary" style="padding: 02px;width: 60px; height: 30px;"> عضو <i class="uil-thumbs-up"></i> 
+          </a> 
+      
+      </div>
+  </div>
+</div>

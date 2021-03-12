@@ -1,0 +1,282 @@
+
+     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="chevron-down-circle-outline"
+        pullingText=""
+        refreshingSpinner="circles"
+        refreshingText="تحميل">
+      </ion-refresher-content>
+    </ion-refresher>
+
+
+    <div class="post-newer" *ngIf="user?._id === superUser?._id">
+
+        <div class="post-new" uk-toggle="target: body ; cls: post-focus">
+            <div class="post-new-media">
+                <div class="post-new-media-user">
+                    <img [src]="user.image" alt="">
+                </div>
+                <div class="post-new-media-input">
+                    <input (click)="url = ''" type="text" class="uk-input" placeholder="انشر ">
+                </div>
+            </div>
+            <hr>
+      
+        </div>
+      
+        <div class="post-pop">
+      
+            <div class="post-new-overyly" uk-toggle="target: body ; cls: post-focus"></div>
+      
+            <div class="post-new uk-animation-slide-top-small">
+      
+      
+                <div class="post-new-header">
+      
+                    <h4> إنشاء منشور جديد</h4>
+      
+                    <!-- close button-->
+                    <span (click)="url = ''" class="post-new-btn-close" uk-toggle="target: body ; cls: post-focus"
+                        uk-tooltip="pos: left "></span>
+      
+                </div>
+      
+                <div class="post-new-media" [style.height.px]="heightOfCadre">
+                    <div class="post-new-media-user">
+                        <img  [src]="user?.image" alt="">
+                    </div>
+                    <div  style="height: 100px !important;max-height: max-content;" class="post-new-media-input">
+                        <angular-editor
+                        style="border: 0px;"
+                        [(ngModel)]="post.text"  class="uk-input"
+                        [config]="editorConfig" (ngModelChange)="countHeight()"  [(ngModel)]="htmlContent"></angular-editor>
+    
+                      
+                        
+                    </div>
+                </div>
+                <div (click)="url = null" *ngIf="(url?.indexOf('mp4') > 1 && url?.indexOf('mp4') < 15) && url?.length > 0">
+                    <span (click)="url = null" class="post-new-btn-close"
+                    uk-tooltip="pos: right " style="margin-top: 4px;"></span>
+                    <video  style="width: 100%;"  controls="controls" [muted]="'muted'" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+                      <source [src]="url" type="video/mp4" />
+                   </video>
+                </div>
+        
+                  <div style="width: 95%;margin:8px" *ngIf="url && (url.indexOf('mp4') === -1 || url.indexOf('mp4') > 15 )" >
+                    <span (click)="url = null" class="post-new-btn-close"
+                    uk-tooltip="pos: right "></span>
+                      <img [src]="url">
+                  </div>
+                  <div class="post-new-tab-nav">
+                      <a  uk-tooltip="title:Close">
+                          
+                          <input (change)="url=null; onAdd($event)" style="display: none;" id="file"  #fileInput name="image" type="file">
+                          <label for="file">
+                             <i  (click)="url= null" class="uil-image"></i>
+                          </label>
+                        </a>
+               
+                  </div>
+                <div class="uk-flex uk-flex-between">
+      
+             
+      
+                    <a uk-toggle="target: body ; cls: post-focus"
+                    uk-tooltip="title:Close; pos: left " (click)="ajoutPost()" class="button primary px-6"> شارك </a>
+                </div>
+            </div>
+      
+        </div>
+      
+      </div>
+      
+
+
+
+
+<div class="uk-flex uk-flex-between">
+
+
+
+</div>
+
+
+
+
+
+<div *ngFor="let p of posts ; let i = index" class="post">
+  <div class="post-heading">
+      <div class="post-avature">
+          <img [src]="p?.author[0]?.image" alt="">
+      </div>
+      <div class="post-title">
+          <h4 style="margin-right: 8px;margin-top: -0px;margin-bottom: 6px;">  {{p?.author[0]?.name}}    
+          <span *ngIf="p?.groupe[0]" class="material-icons">
+              arrow_left
+          </span>
+      
+          <a [routerLink]="['/home/groupedetail' , p.groupe[0]?._id]" style="text-decoration: underline;color: black;">
+          {{p?.groupe[0]?.name}}
+
+          </a>
+      </h4>
+      
+      </div>
+      <div *ngIf="p?.authorId === user?.idFacebook && user?._id === superUser?._id" class="post-btn-action">
+          <span class="icon-more uil-ellipsis-h"></span>
+          <div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover ">
+              <ul class="uk-nav uk-dropdown-nav">
+                  <!-- <li><a href="#"> <i class="uil-share-alt mr-1"></i> شارك</a> </li>
+                  
+              
+                  <li><a href="#"> <i class="uil-favorite mr-1"></i> إضافة مفضلات</a></li> -->
+                  <li (click)="presentAlertConfirm(p?._id)" *ngIf="p?.authorId === user?.idFacebook"><a  class="text-danger"> <i class="uil-trash-alt mr-1"></i>
+                      حذف </a></li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="post-description">
+
+    <div [innerHTML]="getLinkFromPostDescription(p?.text, i)?.txt"></div>
+
+    <a [href]="getLinkFromPostDescription(p?.text, i)?.link" target="_blank" *ngIf="p?.text?.indexOf('http') > -1">{{getLinkFromPostDescription(p?.text,i)?.link}}</a>
+
+  
+    <div  (click)="presentModal(_data.url + 'getfile/' + p?.image)"  *ngIf="p?.image && p?.image.indexOf('mp4') === -1" class="fullsizeimg" style="width: 100%;margin-top:8px;">
+        <img [src]="_data.url + 'getfile/' + p?.image" alt=""  style="height: 240px; width:100%">
+
+    </div>
+
+    <video  style="width: 100%;margin-top:8px;" *ngIf="p?.image && p?.image?.indexOf('mp4') > 0" controls="controls" [muted]="'muted'" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+        <source [src]="_data.url + 'getfile/' + p?.image" type="video/mp4" />
+    </video>
+
+
+
+  </div>
+
+  <div class="post-state">
+      <div class="post-state-btns" (click)="p.like.indexOf(user._id) === -1 ? like(i) : dislike(i)"> <i  class="uil-thumbs-up"></i>{{p.like.length}}<span> الإعجابات </span>
+      </div>
+
+      <div class="post-state-btns" (click)="p.dislike.indexOf(user._id) === -1 ? adddislike(i) : removedislike(i)"> <i class="uil-thumbs-down"></i>{{p.dislike.length}}<span> الإعجابات </span>
+      </div>
+
+
+      <div class="post-state-btns" (click)="getCommentByPostId(p._id);selectedPost = i;url = ''"> <i class="uil-comment"></i>  <span> تعليقات</span>
+      </div>
+     
+    
+  </div>
+
+  <!-- post comments -->
+  <div *ngIf="showComment && i === selectedPost" class="post-comments">
+    
+      <div *ngFor="let c of comments; let i = index"  class="post-comments-single">
+          <div class="post-comment-avatar"> 
+              <img style="margin-left: 8px;" [src]="c.author[0].image" alt="">
+          </div>
+          <div class="post-comment-text " style="width: 100%;">
+              <div class="post-comment-text-inner">
+                  <h6> {{c.author[0].name}}</h6>
+                  <p>
+                    {{getLinkFromPostDescription(c?.text, i)?.txt}}
+                </p>
+            
+                <a [href]="getLinkFromPostDescription(c?.text, i)?.link" target="_blank" *ngIf="c?.text?.indexOf('http') > -1">{{getLinkFromPostDescription(c?.text,i)?.link}}</a>
+            
+                  <div (click)="presentModal(_data.url + 'getfile/' + c?.image)" *ngIf="c.image" class="fullsizeimg" style="width: 80%;">
+                      <img [src]="_data.url + 'getfile/' + c?.image" alt="">
+          
+                  </div>
+              </div>
+         
+              <div style="display: flex;">
+                <div class="uk-text-small" (click)="c.like.indexOf(user._id) === -1 ? likecm(i) : dislikecm(i)">
+                    <a  class="text-danger mr-1"> {{c.like.length}} <i class="uil-thumbs-up"></i></a>
+
+                </div>    
+                <div style="width: 20px;">
+
+                </div>
+                <div class="uk-text-small" (click)="c.dislike.indexOf(user._id) === -1 ? adddislikecm(i) : removedislikecm(i)">
+                    <a  class="text-danger mr-1"> {{c.dislike.length}} <i class="uil-thumbs-down"></i></a>
+                </div>    
+            </div>
+          </div>
+    
+          <div *ngIf="c?.authorId === superUser.idFacebook" class="post-btn-action">
+            <span class="icon-more uil-ellipsis-h"></span>
+            <div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover ">
+                <ul class="uk-nav uk-dropdown-nav">
+                    <!-- <li><a href="#"> <i class="uil-share-alt mr-1"></i> شارك</a> </li>
+                    
+                
+                    <li><a href="#"> <i class="uil-favorite mr-1"></i> إضافة مفضلات</a></li> -->
+                    <li (click)="presentAlertConfirmToDeleteComment(c?._id , p?._id)" *ngIf="c?.authorId === superUser.idFacebook"><a  class="text-danger"> <i class="uil-trash-alt mr-1"></i>
+                        حذف </a></li>
+
+
+                        <li (click)="presentAlertPrompt(c?._id , p?._id)" *ngIf="c?.authorId === user.idFacebook"><a  class="text-primary"> <i class="uil-pencil-alt mr-1"></i>
+                            تعديل </a></li>
+       
+                </ul>
+            </div>
+        </div>
+
+
+
+      </div>
+ 
+
+      <!-- <a href="#" class="view-more-comment"> عرض 8 مزيد من التعليقات</a> -->
+      <div style="width: 33%;margin:8px;position: relative;" *ngIf="url && (url.indexOf('mp4') === -1 || url.indexOf('mp4') > 15 )">
+        <ion-icon name="close-circle-outline" style="margin-top: -8px;margin-right: -8px;position: absolute;" size="large" (click)="url=null "></ion-icon>
+     
+            <img [src]="url">
+    </div>
+
+    <div (click)="url = null" *ngIf="(url?.indexOf('mp4') > 1 && url?.indexOf('mp4') < 15) && url?.length > 0" style="position: relative;">
+        <ion-icon name="close-circle-outline" style="margin-top: -8px;margin-right: -8px;position: absolute;" size="large" (click)="url=null"></ion-icon>
+     
+        <video  style="width: 33%;"  controls="controls" [muted]="'muted'" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+          <source [src]="url" type="video/mp4" />
+       </video>
+    </div>
+      <div class="post-add-comment">
+          <div class="post-add-comment-avature">
+              <img [src]="superUser.image" alt="">
+          </div>
+          
+          <div class="post-add-comment-text-area" style="display: inline-flex;">
+             
+            <textarea style="width: 95%;background-color: rgba(0, 0, 0, 0);border: 0px;" [ngClass]="{'error' : testComment}"  [(ngModel)]="comment.text" type="text" placeholder="اكتب تعليقك ..."></textarea>
+            <input (change)="onAdd($event)" style="display: none;" id="file1"  #fileInput name="image" type="file">
+           
+            <button style="background-color: transparent;">
+                <label for="file1">
+                    <i   class="uil-image"></i>
+                 </label>
+            </button>
+            <button style="background-color: transparent;"   (click)="ajoutComment(p._id)">
+                <ion-icon style=" transform: rotate(180deg);" name="send-sharp"></ion-icon>
+            </button>
+          </div>
+
+      </div>
+
+  </div>
+
+
+
+</div>
+
+
+<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="تحميل المزيد">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>

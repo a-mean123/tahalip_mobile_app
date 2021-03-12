@@ -1,0 +1,21 @@
+.btn-primary{
+    padding:8px 16px;
+    color: white;
+    border-radius: 6px;
+    background-color: rgba(70, 70, 235, 0.877);
+}
+
+
+.alert-wrapper {
+    background: #e5e5e5 !important;
+  }
+  
+  /* Works - pass "my-custom-class" in cssClass to increase specificity */
+  .my-custom-class .alert-wrapper {
+    background: #e5e5e5 !important;
+  }
+
+  .my-custom-class {
+    --background: #e5e5e5 !important;
+  }
+
